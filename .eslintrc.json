@@ -1,3 +1,10 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    // Example: Customize the rule "no-console" to allow warnings
+    "no-console": "error",
+
+    // Example: Add a new custom rule
+    "my-custom-rule": "error"
+  }
 }

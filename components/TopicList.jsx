@@ -56,25 +56,23 @@ const TopicList = () => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/topics", {
-          cache: "no-store",
-        });
+        const res = await fetch("http://localhost:3000/api/topics");
 
         if (!res.ok) {
           throw new Error("Failed to fetch topics");
         }
 
         const data = await res.json();
-        console.log(data)
-        setTopics(data); // Update the state with fetched data
-        console.log(topics)
+
+        setTopics(data.topics); // Update the state with fetched data
+       
       } catch (error) {
         console.error("Error loading topics", error);
       }
     };
 
     fetchTopics(); // Call the fetchTopics function when the component mounts
-  }, []);
+  }, [topics]);
 
   return (
     <>

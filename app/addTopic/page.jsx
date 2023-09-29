@@ -5,14 +5,14 @@ import {useState} from 'react'
 const AddTopic = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("")
-    const handleSubmit =(e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault();
         if(!title || !description){
             alert("please fill all the details")
             return;
         }
         try{
-            const res = await fetchh("http://localhost:3000/api/topics",{
+            const res = await fetch("http://localhost:3000/api/topics",{
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"
