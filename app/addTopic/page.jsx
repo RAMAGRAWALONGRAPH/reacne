@@ -1,8 +1,10 @@
 "use client"
 import React from 'react'
 import {useState} from 'react'
+import { useRouter } from "next/navigation";
 
 const AddTopic = () => {
+    const router = useRouter();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("")
     const handleSubmit = async(e)=>{
@@ -19,7 +21,14 @@ const AddTopic = () => {
                 },
                 body: JSON.stringify({title, description})
             })
-        } catch(error){}
+            if (res.ok) {
+              router.refresh();
+              router.push("/");
+            }
+      
+        } catch(error){
+            console.log("Error while adding the topic", error); 
+        }
     }
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">

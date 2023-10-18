@@ -1,3 +1,4 @@
+// "use client"
 // import React from 'react'
 // import RemoveBtn from './RemoveBtn'
 // import {HiPencilAlt} from "react-icons/hi"
@@ -11,8 +12,9 @@
 //    if(!res.ok){
 //     throw new Error("failed to fetch topics")
 //    }
-   
-//  return res.json();
+//    let data = await res.json();
+//    console.log(data)
+//    return data;
   
    
 //     }catch(error){
@@ -31,7 +33,8 @@
 //         <h2 className='font-bold text-2xl'>{t.title}</h2>
 //         <div>{t.description}</div>
 //         </div>
-//         <div className='items-start'><RemoveBtn/>
+//         <div className='items-start'>
+//           <RemoveBtn id={t._id}/>
 //         <Link href={`/editTopic/${t._id}`}>
 //             <HiPencilAlt size={24}/>
 //         </Link>
@@ -74,9 +77,24 @@ const TopicList = () => {
     fetchTopics(); // Call the fetchTopics function when the component mounts
   }, [topics]);
 
+   useEffect(() => {
+     fetch("http://localhost:3000/api/topics")
+       .then((response) => response.json())
+
+       .then((data) => {
+      if (data.topics && Array.isArray(data.topics)) {
+          setTopics(data.topics);
+      }else {
+          console.error("Data received does not contain 'topics' property or is not an array:", data);
+        }
+      })
+       .catch((error) => console.error("Error fetching data", error));
+       console.log(topics)
+   }, []);
+
   return (
     <>
-      {topics.map((t) => (
+      {topics && topics.map((t) => (
         <div
           key={t._id}
           className="p-4 border border-slate-300 my-3 flex justify-between gap-5"
